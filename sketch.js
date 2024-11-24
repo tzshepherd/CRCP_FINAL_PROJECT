@@ -8,6 +8,10 @@ function setup() {
     {
       rainDrops.push(new rainDrop());
     }
+    for(let i = 0;i <= 4; i++)
+    {
+        squares.push(new square());
+    }
 }
 
 function draw() {
@@ -22,6 +26,24 @@ function draw() {
       rainDrops[i].reset();
     }
 
+  }
+  for(let i = 0; i < squares.length; i++)
+  {
+    squares[i].drawSquare();
+  }
+}
+class square{
+  constructor(){
+    this.x = random(0, width);
+    this.y = random(0, height);
+    this.xSize = random(50,100);
+    this.ySize = random(50,100);
+    
+  }
+  drawSquare() {
+    stroke(0);
+    fill(255,0,0);
+    rect(this.x, this.y, this.xSize, this.ySize);
   }
 }
 
