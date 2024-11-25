@@ -16,7 +16,7 @@ function setup() {
 
 function draw() {
   background(0);
-  for(let i = 0; i < rainDrops.length - 1; i++)
+  for(let i = 0; i < rainDrops.length; i++)
   {
     rainDrops[i].drawDrop();
     rainDrops[i].fall();
@@ -25,7 +25,14 @@ function draw() {
     {
       rainDrops[i].reset();
     }
-
+    for( let j = 0; j < squares.length; j++)
+    {
+      if (rainDrops[i].hasHitSquare(squares[j]))
+      {
+        rainDrops[i].reset();
+        break;
+      }
+    }
   }
   for(let i = 0; i < squares.length; i++)
   {
@@ -41,8 +48,8 @@ class square{
     
   }
   drawSquare() {
-    stroke(0);
-    fill(255,0,0);
+    stroke(100,100,100);
+    fill(100,100,100);
     rect(this.x, this.y, this.xSize, this.ySize);
   }
 }
@@ -52,7 +59,7 @@ class rainDrop {
     this.x = random(- 100,width);
     this.y = random(-height,0);
     this.size = random(5,10);
-    this.speed = random(8,10);
+    this.speed = random(8,14);
 
   }
 
@@ -71,6 +78,9 @@ class rainDrop {
   {
     this.x = random(startingX, width);
     this.y = 0;
+  }
+  hasHitSquare(square){
+    return(this.x > square.x && this.x < square.x + square.xSize && this.y > square.y && this.y < square.y + square.ySize);
   }
 }
 
