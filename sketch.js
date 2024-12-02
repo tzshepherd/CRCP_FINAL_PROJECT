@@ -3,19 +3,20 @@ let squares = [];
 let startingX = -100;
 
 function setup() {
+  frameRate(60);
   createCanvas(600, 600);
-  for(let i = 0;i <= 300; i++)
+  for(let i = 0;i <= 250; i++)
     {
       rainDrops.push(new rainDrop());
     }
-    for(let i = 0;i <= 4; i++)
+    for(let i = 0;i <= random(1, 10); i++)
     {
         squares.push(new square());
     }
 }
 
 function draw() {
-  background(0);
+  background(20);
   for(let i = 0; i < rainDrops.length; i++)
   {
     rainDrops[i].drawDrop();
@@ -48,8 +49,8 @@ class square{
     
   }
   drawSquare() {
-    stroke(100,100,100);
-    fill(100,100,100);
+    stroke(0);
+    fill(0);
     rect(this.x, this.y, this.xSize, this.ySize);
   }
 }
@@ -59,7 +60,9 @@ class rainDrop {
     this.x = random(- 100,width);
     this.y = random(-height,0);
     this.size = random(5,10);
-    this.speed = random(8,14);
+    this.speed = random(10,18);
+    let blueColor = random(100, 255);
+    this.color = color(0, 0, blueColor);
 
   }
 
@@ -69,7 +72,7 @@ class rainDrop {
   }
 
   drawDrop(){
-    stroke(0, 0, 255);
+    stroke(this.color);
     strokeWeight(2);
     line(this.x, this.y, this.x + 2, this.y + this.size);
   }
