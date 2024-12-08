@@ -1,6 +1,7 @@
 let rainDrops = [];
 let squares = [];
 let startingX = -100;
+let circleRad = 25;
 
 function setup() {
   frameRate(60);
@@ -17,10 +18,14 @@ function setup() {
 
 function draw() {
   background(20);
+
   for(let i = 0; i < rainDrops.length; i++)
   {
     rainDrops[i].drawDrop();
     rainDrops[i].fall();
+    if(rainDrops[i].hasHitMouse(mouseX,mouseY)){
+      rainDrops[i].reset();
+    }
 
     if (rainDrops[i].y > height)
     {
@@ -39,6 +44,8 @@ function draw() {
   {
     squares[i].drawSquare();
   }
+  fill(0);
+  ellipse(mouseX, mouseY, circleRad * 2, circleRad * 2);
 }
 class square{
   constructor(){
@@ -61,8 +68,8 @@ class rainDrop {
     this.y = random(-height,0);
     this.size = random(5,10);
     this.speed = random(10,18);
-    let blueColor = random(100, 255);
-    this.color = color(0, 0, blueColor);
+    let blueColor = random(100, 200);
+    this.color = color(blueColor, blueColor, 255);
 
   }
 
@@ -79,11 +86,21 @@ class rainDrop {
 
   reset()
   {
+    // line(this.x, this.y + this.size, this.x + 10, this.y - 15);
+    // line(this.x, this.y + this.size, this.x - 10, this.y - 15);
+    line(this.x, this.y - 1, this.x + random(6,14), this.y - random(8,12));
+    line(this.x, this.y - 1, this.x - random(6,14), this.y - random(8,12));
     this.x = random(startingX, width);
     this.y = 0;
+
   }
   hasHitSquare(square){
     return(this.x > square.x && this.x < square.x + square.xSize && this.y > square.y && this.y < square.y + square.ySize);
   }
+  hasHitMouse(mouseX, mouseY){
+    let distance = dist(this.x, this.y, mouseX, mouseY);
+    return(distance < circleRad);
+  }
+
 }
 
