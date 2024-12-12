@@ -2,10 +2,15 @@ let rainDrops = [];
 let squares = [];
 let startingX = -100;
 let circleRad = 25;
+let colorSlider;
+let rainbowMode = false;
 
 function setup() {
   frameRate(60);
   createCanvas(600, 600);
+  colorSlider = createSlider(0, 255, 0);
+  colorSlider.position(10, height + 30);
+  colorMode(HSB, 255);
   for(let i = 0;i <= 250; i++)
     {
       rainDrops.push(new rainDrop());
@@ -15,14 +20,37 @@ function setup() {
         squares.push(new square());
     }
 }
+function keyPressed() {
+  if (key === 'r' || key === 'R'){
+    if (rainbowMode == false){
+      rainbowMode = true;
+  }
+  else rainbowMode = false;
+}
+}
+
 
 function draw() {
   background(20);
+  
+  if (rainbowMode == true){
+    colorValue = colorValue + 1;
+      if (colorValue > 255) {
+        colorValue = 0; 
+      }
+  }
+  else {
+    colorValue = colorSlider.value();
+  }
+  
+  
 
   for(let i = 0; i < rainDrops.length; i++)
   {
+    rainDrops[i].color = color(colorValue, 255, 255);
     rainDrops[i].drawDrop();
     rainDrops[i].fall();
+
     if(rainDrops[i].hasHitMouse(mouseX,mouseY)){
       rainDrops[i].reset();
     }
@@ -66,11 +94,11 @@ class rainDrop {
   constructor() {
     this.x = random(- 100,width);
     this.y = random(-height,0);
-    this.size = random(5,10);
+    this.size = random(20,35);
     this.speed = random(10,18);
-    let blueColor = random(100, 200);
-    this.color = color(blueColor, blueColor, 255);
-
+    // let blueColor = random(100, 200);
+    // this.color = color(blueColor, blueColor, 255);
+    this.color = color(0, 255, 255);
   }
 
   fall() {
@@ -92,6 +120,7 @@ class rainDrop {
     line(this.x, this.y - 1, this.x - random(6,14), this.y - random(8,12));
     this.x = random(startingX, width);
     this.y = 0;
+    
 
   }
   hasHitSquare(square){
