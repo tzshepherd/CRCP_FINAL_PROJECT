@@ -9,7 +9,7 @@ function setup() {
   frameRate(60);
   createCanvas(600, 600);
   colorSlider = createSlider(0, 255, 0);
-  colorSlider.position(10, height + 30);
+  colorSlider.position(10, height + 40);
   colorMode(HSB, 255);
   for(let i = 0;i <= 250; i++)
     {
